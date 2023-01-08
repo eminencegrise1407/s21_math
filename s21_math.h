@@ -16,10 +16,10 @@
 // #define s21_2_SQRTPI 1.12837916709551257390
 #define s21_INFINITY __builtin_inf()
 #define s21_NAN __builtin_nanf("0x7fc00000")
-#define isfinite(x) __builtin_isfinite(x)
-#define isinf(x) __builtin_isinf(x)
-#define isnan(x) __builtin_isnan(x)
-#define isnormal(x) __builtin_isnormal(x)
+#define is_fin(x) __builtin_isfinite(x)
+#define is_inf(x) __builtin_isinf(x)
+#define is_nan(x) __builtin_isnan(x)
+#define is_norm(x) __builtin_isnormal(x)
 
 int s21_abs(int x);
 long double s21_acos(double x);
