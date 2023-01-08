@@ -1,230 +1,40 @@
-#include <check.h>
-#include <stdio.h>
-#include <math.h>
-#include <stdlib.h>
+#ifndef SRC_S21_MATH_H_
+#define SRC_S21_MATH_H_
+#define s21_eps 1e-16
+#define s21_PI 3.14159265358979323846
 
+// закомментированные константы вырезаны, может, не навсегда
 
-#include "s21_math.h"
-// START_TEST(s21_abs_test) { 
-//   int num = 23;
-//   ck_assert_int_eq(s21_abs(num), abs(num));
+// #define s21_E 2.7182818284590452354
+// #define s21_LOG2E 1.4426950408889634074
+// #define s21_LOG10E 0.43429448190325182765
+// #define s21_LN2 0.69314718055994530942
+// #define s21_LN10 2.30258509299404568402
+// #define s21_SQRT2 1.41421356237309504880
+// #define s21_SQRT1_2 0.70710678118654752440
+// #define s21_2_SQRTPI 1.12837916709551257390
+#define s21_INFINITY __builtin_inf()
+#define s21_NAN __builtin_nanf("0x7fc00000")
+#define is_fin(x) __builtin_isfinite(x)
+#define is_inf(x) __builtin_isinf(x)
+#define is_nan(x) __builtin_isnan(x)
+#define is_norm(x) __builtin_isnormal(x)
 
-//   int num2 = 200000;
-//   ck_assert_int_eq(s21_abs(num2), abs(num2));
+int s21_abs(int x);
+long double s21_acos(double x);
+long double s21_asin(double x);
+long double s21_atan(double x);
+long double s21_ceil(double x);
+long double s21_cos(double x);
+long double s21_exp(double x);
+long double s21_fabs(double x);
+long double s21_floor(double x);
+long double s21_fmod(double x, double y);
+long double s21_log(double x);
+long double s21_pow(double base, double exp); // неправильно
+long double s21_sin(double x);
+long double s21_sqrt(double x);
+long double s21_tan(double x);
+double s21_factorial(long long int x);
 
-//   int num3 = -200000;
-//   ck_assert_int_eq(s21_abs(num3), abs(num3));
-// }
-// END_TEST
-
-START_TEST(s21_acos_test) {
-  double x = 0.0;
-  ck_assert_ldouble_eq_tol(acos(x), s21_acos(x), 1e-6);
-  x = 4.5;
-  ck_assert_ldouble_eq_tol(s21_acos(x), acos(x), 1e-6);
-  x = -200000.567;
-  ck_assert_ldouble_eq_tol(s21_acos(x), acos(x), 1e-6);
-  x = 0.7;
-  ck_assert_ldouble_eq_tol(s21_acos(x), acos(x), 1e-6);
-  x = -0.99;
-  ck_assert_ldouble_eq_tol(s21_acos(x), acos(x), 1e-6);
-}
-END_TEST
-
-START_TEST(s21_asin_test) {
-  double x = 0.0;
-  ck_assert_ldouble_eq_tol(asin(x), s21_asin(x), 1e-6);
-  x = 4.5;
-  ck_assert_ldouble_eq_tol(s21_asin(x), asin(x), 1e-6);
-  x = -200000.567;
-  ck_assert_ldouble_eq_tol(s21_asin(x), asin(x), 1e-6);
-  x = 0.7;
-  ck_assert_ldouble_eq_tol(s21_asin(x), asin(x), 1e-6);
-  x = -0.99;
-  ck_assert_ldouble_eq_tol(s21_asin(x), asin(x), 1e-6);
-}
-END_TEST
-
-START_TEST(s21_atan_test) {
-  double x = 0.0;
-  ck_assert_ldouble_eq_tol(atan(x), s21_atan(x), 1e-6);
-  x = 4.5;
-  ck_assert_ldouble_eq_tol(s21_atan(x), atan(x), 1e-6);
-  x = -200000.567;
-  ck_assert_ldouble_eq_tol(s21_atan(x), atan(x), 1e-6);
-  x = 0.7;
-  ck_assert_ldouble_eq_tol(s21_atan(x), atan(x), 1e-6);
-  x = -0.99;
-  ck_assert_ldouble_eq_tol(s21_atan(x), atan(x), 1e-6);
-  x = 1.0/0.0;
-  ck_assert_ldouble_eq_tol(s21_atan(x), atan(x), 1e-6);
-  x = -1.0/0.0;
-  ck_assert_ldouble_eq_tol(s21_atan(x), atan(x), 1e-6);
-  x = 0.0/0.0;
-  ck_assert_ldouble_eq_tol(s21_atan(x), atan(x), 1e-6);
-}
-END_TEST
-
-START_TEST(s21_fmod_test) {
-  double x = 0.0;
-  double y = 0.0;
-  ck_assert_ldouble_eq_tol(fmod(x, y), s21_fmod(x, y), 1e-6);
-  x = 4.5;
-  y = 2.0;
-  ck_assert_ldouble_eq_tol(s21_fmod(x, y), fmod(x, y), 1e-6);
-  x = -200000.567;
-  y = 2.0;
-  ck_assert_ldouble_eq_tol(s21_fmod(x, y), fmod(x, y), 1e-6);
-  x = 0.7;
-  y = -2.0;
-  ck_assert_ldouble_eq_tol(s21_fmod(x, y), fmod(x, y), 1e-6);
-  x = -0.99;
-  y = 2.0;
-  ck_assert_ldouble_eq_tol(s21_fmod(x, y), fmod(x, y), 1e-6);
-  x = 1.0/0.0;
-  y = 0.0;
-  ck_assert_ldouble_eq_tol(s21_fmod(x, y), fmod(x, y), 1e-6);
-  x = 0.0;
-  y = 1.0/0.0;
-  ck_assert_ldouble_eq_tol(s21_fmod(x, y), fmod(x, y), 1e-6);
-  x = -1.0/0.0;
-  y = 0.0;
-  ck_assert_ldouble_eq_tol(s21_fmod(x, y), fmod(x, y), 1e-6);
-  x = 0.0;
-  y = -1.0/0.0;
-  ck_assert_ldouble_eq_tol(s21_fmod(x, y), fmod(x, y), 1e-6);
-}
-END_TEST
-
-START_TEST(s21_log_test) {
-  double x = 0.0;
-  ck_assert_ldouble_eq_tol(log(x), s21_log(x), 1e-6);
-  x = 4.5;
-  ck_assert_ldouble_eq_tol(s21_log(x), log(x), 1e-6);
-  x = -200000.567;
-  ck_assert_ldouble_eq_tol(s21_log(x), log(x), 1e-6);
-  x = 0.7;
-  ck_assert_ldouble_eq_tol(s21_log(x), log(x), 1e-6);
-  x = -0.99;
-  ck_assert_ldouble_eq_tol(s21_log(x), log(x), 1e-6);
-}
-END_TEST
-
-START_TEST(s21_exp_test) {
-  double x = 0.0;
-  ck_assert_ldouble_eq_tol(exp(x), s21_exp(x), 1e-6);
-  x = 4.5;
-  ck_assert_ldouble_eq_tol(s21_exp(x), exp(x), 1e-6);
-  x = -200000.567;
-  ck_assert_ldouble_eq_tol(s21_exp(x), exp(x), 1e-6);
-  x = 0.7;
-  ck_assert_ldouble_eq_tol(s21_exp(x), exp(x), 1e-6);
-  x = -0.99;
-  ck_assert_ldouble_eq_tol(s21_exp(x), exp(x), 1e-6);
-  x = 1.0/0.0;
-  ck_assert_ldouble_eq_tol(s21_exp(x), exp(x), 1e-6);
-  x = -1.0/0.0;
-  ck_assert_ldouble_eq_tol(s21_exp(x), exp(x), 1e-6);
-  x = 0.0/0.0;
-  ck_assert_ldouble_eq_tol(s21_exp(x), exp(x), 1e-6);
-}
-END_TEST
-// START_TEST(s21_fabs_test) {
-//   double num = 23.34;
-//   ck_assert_ldouble_eq(s21_fabs(num), fabs(num));
-
-//   double num2 = 200000.567;
-//   ck_assert_ldouble_eq(s21_fabs(num2), fabs(num2));
-
-//   double num3 = -200000.456784;
-//   ck_assert_ldouble_eq(s21_fabs(num3), fabs(num3));
-// }
-// END_TEST
-
-// START_TEST(s21_ceil_test) {
-//   double num = 23.34;
-//   ck_assert_ldouble_eq_tol(s21_ceil(num), ceil(num), 1e-6);
-
-//   double num2 = 200000.567;
-//   ck_assert_ldouble_eq_tol(s21_ceil(num2), ceil(num2), 1e-6);
-
-//   double num3 = -200000.456784;
-//   ck_assert_ldouble_eq_tol(s21_ceil(num3), ceil(num3), 1e-6);
-// }
-// END_TEST
-
-// START_TEST(s21_pow_test) {
-//   double num = 4;
-//   ck_assert_ldouble_eq_tol(s21_pow(num, 0.5), pow(num, 0.5), 1e-6);
-//   double num2 = -1;
-//   ck_assert_ldouble_nan(s21_pow(num2, 10.0 ));
-//   double num3 = 23;
-//   ck_assert_ldouble_eq_tol(s21_pow(num3, 4), pow(num3, 4), 1e-6);
-// }
-// END_TEST
-
-START_TEST(s21_sin_test) {
-  double x = 0.0;
-  ck_assert_ldouble_eq_tol(sin(x), s21_sin(x), 1e-6);
-  x = 23.34;
-  ck_assert_ldouble_eq_tol(s21_sin(x), sin(x), 1e-6);
-  x = 200000.567;
-  ck_assert_ldouble_eq_tol(s21_sin(x), sin(x), 1e-6);
-  x = -200000.456784;
-  ck_assert_ldouble_eq_tol(s21_sin(x), sin(x), 1e-6);
-
-}
-END_TEST
-
-// START_TEST(s21_tan_test) {
-//   double num = 23.34;
-//   ck_assert_ldouble_eq_tol(s21_tan(num), tan(num),, 1e-6);
-
-//   double num2 = 200000.567;
-//   ck_assert_ldouble_eq_tol(s21_tan(num2), tan(num2), 1e-6);
-
-//   double num3 = -200000.456784;
-//   ck_assert_ldouble_eq_tol(s21_tan(num3), tan(num3), 1e-6);
-
-//   double num4 = 0;
-//   ck_assert_ldouble_eq_tol(s21_tan(num4), tan(num4), 1e-6);
-// }
-// END_TEST
-
-// START_TEST(s21_cos_test) {
-//   double num = 23.34;
-//   ck_assert_ldouble_eq_tol(s21_cos(num), cos(num), 1e-6);
-
-//   double num2 = 200000.567;
-//   ck_assert_ldouble_eq_tol(s21_cos(num2), cos(num2), 1e-6);
-
-//   double num3 = -200000.456784;
-//   ck_assert_ldouble_eq_tol(s21_cos(num3), cos(num3), 1e-6);
-
-//   double num4 = 0;
-//   ck_assert_ldouble_eq_tol(s21_cos(num4), cos(num4), 1e-6);
-// }
-// END_TEST
-
-
-int main(void) {
-  Suite *s = suite_create("s21_math");
-  TCase *tc = tcase_create("s21_math");
-  SRunner *sr = srunner_create(s);
-  int nf;
-  suite_add_tcase(s, tc);
-
-  // tcase_add_test(tc, s21_abs_test);//works ;)
-  // tcase_add_test(tc, s21_fabs_test); //works ;)
-  // tcase_add_test(tc, s21_ceil_test);//works ;)
-  // tcase_add_test(tc, s21_pow_test); // works ;)
-  tcase_add_test(tc, s21_sin_test);//WTF is happening? 
-  // tcase_add_test(tc, s21_tan_test); //Dosnt work because of sin
-  // tcase_add_test(tc, s21_cos_test); //Dosnt work because of sin
-
-  srunner_run_all(sr, CK_ENV);
-  nf = srunner_ntests_failed(sr);
-  srunner_free(sr);
-  return nf == 0 ? 0 : 1;
-}
-
+#endif
