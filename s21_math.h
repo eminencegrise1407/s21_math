@@ -1,6 +1,5 @@
 #ifndef SRC_S21_MATH_H_
 #define SRC_S21_MATH_H_
-
 #define s21_eps 1e-16
 #define s21_PI 3.14159265358979323846
 
@@ -36,5 +35,6 @@ long double s21_pow(double base, double exp); // неправильно
 long double s21_sin(double x);
 long double s21_sqrt(double x);
 long double s21_tan(double x);
+double s21_factorial(long long int x);
 
 #endif
