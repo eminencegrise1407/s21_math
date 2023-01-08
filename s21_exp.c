@@ -1,14 +1,13 @@
 #include "s21_math.h"
-#include <math.h>
 
 long double s21_exp(double x) {
-  long double result = 0;
-  long double n;
-  int i = 0;
-  if (isnan(x)) {
+  long double result = 1;
+  long double n = 1;
+  int i = 1;
+  if (is_nan(x)) {
     result = s21_NAN;
   } 
-  if (isinf(x)) {
+  if (is_inf(x)) {
     if (x < 0){
         result = 0;
     } else {
@@ -16,12 +15,10 @@ long double s21_exp(double x) {
     }
   } else {
     do {
-      n = pow(x, i) / s21_factorial(i);
+      n *= x/i;
       result += n;
       i++;
-    } while (n > 1e-16);
+    } while (s21_fabs(n) > 1e-16);
   }
-  // добавить проверки на NAN и бесконечность,  заменить 1е-16, заменить pow
-  // и потестить еще, а то мало тестил
   return result;
 }
