@@ -56,6 +56,12 @@ START_TEST(s21_atan_test) {
   ck_assert_ldouble_eq_tol(s21_atan(x), atan(x), 1e-6);
   x = -0.99;
   ck_assert_ldouble_eq_tol(s21_atan(x), atan(x), 1e-6);
+  x = 1.0/0.0;
+  ck_assert_ldouble_eq_tol(s21_atan(x), atan(x), 1e-6);
+  x = -1.0/0.0;
+  ck_assert_ldouble_eq_tol(s21_atan(x), atan(x), 1e-6);
+  x = 0.0/0.0;
+  ck_assert_ldouble_eq_tol(s21_atan(x), atan(x), 1e-6);
 }
 END_TEST
 
@@ -75,11 +81,17 @@ START_TEST(s21_fmod_test) {
   x = -0.99;
   y = 2.0;
   ck_assert_ldouble_eq_tol(s21_fmod(x, y), fmod(x, y), 1e-6);
-  x = 1.0;
+  x = 1.0/0.0;
   y = 0.0;
   ck_assert_ldouble_eq_tol(s21_fmod(x, y), fmod(x, y), 1e-6);
   x = 0.0;
-  y = 1.0;
+  y = 1.0/0.0;
+  ck_assert_ldouble_eq_tol(s21_fmod(x, y), fmod(x, y), 1e-6);
+  x = -1.0/0.0;
+  y = 0.0;
+  ck_assert_ldouble_eq_tol(s21_fmod(x, y), fmod(x, y), 1e-6);
+  x = 0.0;
+  y = -1.0/0.0;
   ck_assert_ldouble_eq_tol(s21_fmod(x, y), fmod(x, y), 1e-6);
 }
 END_TEST
@@ -95,6 +107,26 @@ START_TEST(s21_log_test) {
   ck_assert_ldouble_eq_tol(s21_log(x), log(x), 1e-6);
   x = -0.99;
   ck_assert_ldouble_eq_tol(s21_log(x), log(x), 1e-6);
+}
+END_TEST
+
+START_TEST(s21_exp_test) {
+  double x = 0.0;
+  ck_assert_ldouble_eq_tol(exp(x), s21_exp(x), 1e-6);
+  x = 4.5;
+  ck_assert_ldouble_eq_tol(s21_exp(x), exp(x), 1e-6);
+  x = -200000.567;
+  ck_assert_ldouble_eq_tol(s21_exp(x), exp(x), 1e-6);
+  x = 0.7;
+  ck_assert_ldouble_eq_tol(s21_exp(x), exp(x), 1e-6);
+  x = -0.99;
+  ck_assert_ldouble_eq_tol(s21_exp(x), exp(x), 1e-6);
+  x = 1.0/0.0;
+  ck_assert_ldouble_eq_tol(s21_exp(x), exp(x), 1e-6);
+  x = -1.0/0.0;
+  ck_assert_ldouble_eq_tol(s21_exp(x), exp(x), 1e-6);
+  x = 0.0/0.0;
+  ck_assert_ldouble_eq_tol(s21_exp(x), exp(x), 1e-6);
 }
 END_TEST
 // START_TEST(s21_fabs_test) {
